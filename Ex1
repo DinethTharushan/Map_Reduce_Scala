@@ -1,0 +1,100 @@
+val l = List(1,2,3,4,5)
+
+    //(1)->print list
+    println(l)
+
+
+    //(2)->print by while loop
+    val it = l.iterator
+    while(it.hasNext){
+      print(" "+it.next+" ")
+    }
+    println()
+
+    //(3)->print multiplied list
+    val it1 = l.iterator
+    while(it1.hasNext){
+      print(" "+it1.next*2 +" ")
+    }
+    println()
+
+    //(4)->empty list
+    var l2:List[Int] = List()
+    println(l2)
+
+
+    //(5)->assign values by another list
+    val it2 = l.iterator
+    while(it2.hasNext){
+      l2 = l2:+it2.next()*2
+    }
+    println(l2)
+
+
+    //(6)->map function
+    var l3 = l2.map(_ * 2)
+    println(l3)
+
+
+    //(7)->map function by another function
+    val f1=(x:Int)=>x+5
+    println(f1(7))
+    var l4 = l.map(f1)
+    println(l4)
+
+    //(8)->filter function by another function
+    val f2 = (x:Int)=>x%2==0
+    println(f2(10))
+    var l5 = l.filter(f2)
+    println(l5)
+
+    //(9)->reduce function by another function
+    val f3 = (x:Int, y:Int)=>x+y
+    println(f3(5,4))
+    var l6 = l.reduce(f3)
+    println(l6)
+
+    //(10)->fold function
+    var tot = l.fold(0)(f3)
+    println(tot)
+    var tot1 = l.fold(3)(f3)
+    println(tot1)
+
+    //(11)->direct higher order functions
+
+    //fold
+    var tot2 = l.fold(0)((x, y)=>x+y)
+    println(tot2)
+
+    //reduce
+    var tot3 = l.reduce((x, y)=>x*y)
+    println(tot3)
+
+    //max
+    println(l.reduce((x, y)=>x max y))
+
+    //min
+    println(l.reduce((x, y)=>x min y))
+
+    //(12) isPrime
+    var isPrime = (n:Int)=>(2 to math.sqrt(n).toInt)
+    println(isPrime(100))
+
+    var isPrime1 = (n:Int)=>(2 to math.sqrt(n).toInt).filter((x)=>n%x==0).size==0
+    println(isPrime1(11))
+
+    //(13)->Random Number
+    var rndm = (x:Int)=>scala.util.Random.nextInt(x)
+    println(rndm(15))
+
+    //(14)->Fill by Random numbers
+    var l7 = List.fill(5)(rndm(100))
+    println(l7)
+
+    //(15)sum and average
+    val stat:(List[Int])=>(Int, Double)=(l:List[Int])=>(l.reduce((x, y)=>x+y),l.reduce((x, y)=>x+y)/l.size)
+    println(stat(l7))
+
+    //(16)->sum and average short form
+    val stat1 = (l:List[Int]) => (l.reduce((x,y)=>x+y), l.reduce((x, y)=>x+y)/l.size.toDouble)
+    println(stat1(l7))
