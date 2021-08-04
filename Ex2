@@ -1,0 +1,66 @@
+var l = List(4,5,2,1,6)
+
+    //(1)->tuples
+    val f=(l:List[Int])=>l.map((x)=>(x, 1))
+    println(f(l))
+    val stat = (l:List[Int])=>f(l)
+    println(stat(l))
+
+    //(2)->sum of tuples
+    //The tuple like x = (x._1, x._2) and y = (y._1, y._2)
+    val stat1 = (l:List[Int])=>l.map((x)=>(x,1)).reduce((x, y)=>(x._1+y._1, x._2+y._2))
+    println(stat1(l))
+
+    //(3)->sum and average of list of tuples
+    //A tuple passed to the stat2 function(x._1, x._2)(This kind of tuple)
+    val stat2 = (x:Tuple2[Int,Int])=>(x._1, x._1/x._2.toDouble)
+    println(stat2(stat1(l)))
+
+    //(4)->File Handling
+    //First make a file called sample.txt in the current directory
+    val file1 = scala.io.Source.fromFile("sample.txt", "UTF-8").getLines
+    val words = file1.flatMap(lines=>lines.split(" "))
+    val t1 = words.map(x=>(x,1))
+    var sum = t1.reduce((x, y)=> ("",x._2+y._2))
+    println(sum)
+
+    //(5)->Letter count
+    //count particular letter from a string
+    val lc = (x:Char, y:String)=>(x, y.count(_ == x))
+    println(lc('a', "dineththarushan"))
+
+    //(6)->Letter count of some file
+    val file2 = scala.io.Source.fromFile("sample.txt", "UTF-8").getLines.mkString
+    //not working
+    //var l1 = file2.distinct.toCharArray.map(lc('a', file2))
+    var l2 = lc('a', file2)
+    println(l2)
+
+    //(7)->split words from a string
+    val sw = (x:String)=> x.split(" ").map(_.toLowerCase)
+    val l3 = sw("Hello Dineth Tharushan")
+    for(i <- 0 to l3.size-1){
+      print(" "+l3(i)+" ")
+    }
+    println()
+    val l4 = sw(file2)
+    for(i <- 0 to l4.size-1){
+      print(" "+l4(i)+" ")
+    }
+    println()
+
+    //(8)->search some word from a string
+    val fw = (x:Array[String], y:String)=>x.filter(x=>x==y)
+    val l5 = fw(sw(file2), "dineth")
+    for(i <- 0 to l5.size-1){
+      print(" "+l5(i)+" ")
+    }
+    println()
+
+    //(9)->word count
+    val wc = (x:Array[String], y:String)=>x.filter(x=>x==y).size
+    println(wc(sw(file2), "dineth"))
+
+    //(10)->count all the words
+    val wcx = (x:String) => x.split(" ").map(_.toLowerCase).groupBy(identity).mapValues(_.size)
+    println(wcx(file2))
